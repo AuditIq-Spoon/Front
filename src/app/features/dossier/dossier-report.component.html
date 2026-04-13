@@ -1,0 +1,30 @@
+@if (dossier(); as d) {
+  <h2 class="page-title">Exportable audit report</h2>
+  <p class="page-lead">
+    Official summary: score, anomalies, explanations, and recommendations (wire PDF / Excel export to the API).
+  </p>
+  <article class="report">
+    <h3>Executive summary</h3>
+    <p>
+      Overall score: <strong>{{ d.riskScore }}</strong> / 100 — {{ d.anomalyCount }} anomaly(ies) flagged.
+    </p>
+    <h3>Anomalies</h3>
+    <ul>
+      @for (a of d.anomalies; track a.id) {
+        <li>
+          <strong>{{ a.typeLabel }}</strong> ({{ a.severity }}): {{ a.explanation }}
+        </li>
+      }
+    </ul>
+    <h3>Recommendations (generated)</h3>
+    <ul>
+      <li>Prioritize human validation for high-severity anomalies.</li>
+      <li>Cross-check with finance view for “missing invoice” or “mismatch” statuses.</li>
+      <li>Document every rejection in the human-in-the-loop module.</li>
+    </ul>
+    <div class="report__actions">
+      <button type="button" class="btn" disabled title="Connect to backend">Export PDF</button>
+      <button type="button" class="btn btn--sec" disabled title="Connect to backend">Export Excel</button>
+    </div>
+  </article>
+}

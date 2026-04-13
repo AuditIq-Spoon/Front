@@ -1,0 +1,89 @@
+.dos__head {
+  margin-bottom: 1.25rem;
+}
+
+.dos__back {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.dos__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.dos__meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: var(--color-secondary);
+}
+
+.dos__id {
+  font-family: ui-monospace, monospace;
+}
+
+.dos__status {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dos__status--analyzed {
+  background: rgb(15 110 78 / 0.12);
+  color: var(--color-success);
+}
+
+.dos__status--in_progress {
+  background: rgb(180 83 9 / 0.12);
+  color: var(--color-warning);
+}
+
+.dos__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dos__tab {
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-secondary);
+  transition:
+    background var(--transition),
+    color var(--transition);
+}
+
+.dos__tab:hover {
+  background: var(--color-muted);
+  color: var(--color-primary);
+}
+
+.dos__tab.is-active {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.dos__outlet {
+  min-height: 200px;
+}
+
+.dos--empty {
+  padding: 2rem 0;
+}

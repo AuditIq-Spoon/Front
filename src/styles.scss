@@ -1,0 +1,122 @@
+/* AuditIQ — institutional finance / audit palette */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Primary / secondary — financial sector */
+  --color-primary: #0c2340;
+  --color-primary-muted: #1e3a5f;
+  --color-on-primary: #ffffff;
+  --color-secondary: #3d5a80;
+  --color-secondary-muted: #5c7a9e;
+  --color-accent: #b8860b;
+  --color-accent-hover: #9a7209;
+  --color-background: #f0f3f7;
+  --color-surface: #ffffff;
+  --color-foreground: #0a1628;
+  --color-muted: #e4e9f0;
+  --color-border: #c8d4e0;
+  --color-destructive: #b42318;
+  --color-success: #0f6e4e;
+  --color-warning: #b45309;
+  --color-risk-high: #b42318;
+  --color-risk-medium: #b45309;
+  --color-risk-low: #0f6e4e;
+  --color-ring: #0c2340;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgb(12 35 64 / 0.06);
+  --shadow-md: 0 4px 14px rgb(12 35 64 / 0.08);
+  --transition: 180ms ease-out;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-background);
+  color: var(--color-foreground);
+  line-height: 1.5;
+  min-height: 100dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+a {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Lightweight chart-style utilities */
+.chart-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 120px;
+  padding-top: 0.5rem;
+}
+
+.chart-bar__segment {
+  flex: 1;
+  min-width: 8px;
+  background: linear-gradient(180deg, var(--color-secondary) 0%, var(--color-primary-muted) 100%);
+  border-radius: 4px 4px 0 0;
+  opacity: 0.85;
+  transition: opacity var(--transition);
+}
+
+.chart-bar__segment:hover {
+  opacity: 1;
+}
+
+.chart-bar__segment--outlier {
+  background: linear-gradient(180deg, var(--color-risk-medium) 0%, var(--color-risk-high) 100%);
+}

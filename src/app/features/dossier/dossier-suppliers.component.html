@@ -1,0 +1,17 @@
+@if (dossier(); as d) {
+  <h2 class="page-title">Suppliers</h2>
+  <p class="page-lead">Win rate, frequency, price history, and associated risk.</p>
+  <ul class="sup-list">
+    @for (s of d.suppliers; track s.id) {
+      <li class="sup-card">
+        <a [routerLink]="['/cases', d.id, 'suppliers', s.id]" class="sup-card__link">
+          <span class="sup-card__name">{{ s.name }}</span>
+          <span class="sup-card__meta"
+            >Win rate {{ s.winRate | percent: '1.0-0' }} — {{ s.frequency }} linked cases</span
+          >
+        </a>
+        <p class="sup-card__risk">{{ s.riskNote }}</p>
+      </li>
+    }
+  </ul>
+}

@@ -1,0 +1,14 @@
+---
+description: AuditIQ UI and copy must be in English
+globs: "**/auditiq/**/*"
+alwaysApply: false
+---
+
+# English-only product copy (AuditIQ)
+
+- All **user-visible text** in the AuditIQ app must be **English**: page titles, labels, buttons, table headers, empty states, aria-labels, `title` attributes, placeholder text, and mock/demo data shown in the UI.
+- Keep **code identifiers** (TypeScript names, route parameter keys, API field names) consistent with the codebase; only translate what users see.
+- Use **`lang="en"`** on the document root and locale **`en-US`** for Angular pipes (`LOCALE_ID`, `registerLocaleData` for English).
+- Do not revert marketing names if they are proper nouns (e.g. **AuditIQ**, **DataVigil**) unless the user asks to rename them.
+
+When adding features, default to English strings; do not mix French and English in the same screen.

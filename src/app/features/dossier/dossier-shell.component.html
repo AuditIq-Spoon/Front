@@ -1,0 +1,56 @@
+@if (dossier(); as d) {
+  <div class="dos">
+    <header class="dos__head">
+      <a routerLink="/cases" class="dos__back">← Cases</a>
+      <div class="dos__title-block">
+        <h1 class="dos__title">{{ d.label }}</h1>
+        <p class="dos__meta">
+          <span class="dos__id">{{ d.id }}</span>
+          <span class="dos__status" [class]="'dos__status--' + d.status">
+            {{ d.status === 'analyzed' ? 'Analyzed' : 'In progress' }}
+          </span>
+        </p>
+      </div>
+    </header>
+
+    <nav class="dos__tabs" aria-label="Case sections">
+      <a
+        [routerLink]="['/cases', id()]"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="dos__tab"
+      >
+        Overview
+      </a>
+      <a [routerLink]="['/cases', id(), 'finance']" routerLinkActive="is-active" class="dos__tab">
+        Financial analysis
+      </a>
+      <a [routerLink]="['/cases', id(), 'procurement']" routerLinkActive="is-active" class="dos__tab">
+        Procurement
+      </a>
+      <a [routerLink]="['/cases', id(), 'tenders']" routerLinkActive="is-active" class="dos__tab">
+        Tenders
+      </a>
+      <a [routerLink]="['/cases', id(), 'decisions']" routerLinkActive="is-active" class="dos__tab">
+        Decisions
+      </a>
+      <a [routerLink]="['/cases', id(), 'validation']" routerLinkActive="is-active" class="dos__tab">
+        Validation
+      </a>
+      <a [routerLink]="['/cases', id(), 'suppliers']" routerLinkActive="is-active" class="dos__tab">
+        Suppliers
+      </a>
+      <a [routerLink]="['/cases', id(), 'market']" routerLinkActive="is-active" class="dos__tab">Market</a>
+      <a [routerLink]="['/cases', id(), 'report']" routerLinkActive="is-active" class="dos__tab">Report</a>
+    </nav>
+
+    <div class="dos__outlet">
+      <router-outlet />
+    </div>
+  </div>
+} @else {
+  <div class="dos dos--empty">
+    <p>Case not found.</p>
+    <a routerLink="/cases" class="dos__back">Back to list</a>
+  </div>
+}

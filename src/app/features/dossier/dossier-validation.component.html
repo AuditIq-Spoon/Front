@@ -1,0 +1,38 @@
+@if (dossier(); as d) {
+  <h2 class="page-title">Human validation (human-in-the-loop)</h2>
+  <p class="page-lead">
+    Confirm or reject each anomaly to refine future scoring and reduce false positives. Global feedback:
+    {{ feedback().confirmed }} confirmed, {{ feedback().rejected }} rejected.
+  </p>
+
+  <ul class="val-list">
+    @for (a of d.anomalies; track a.id) {
+      <li class="val-card">
+        <div class="val-card__head">
+          <span class="val-card__type">{{ a.typeLabel }}</span>
+          <span class="val-card__st">{{ statusLabel(a.humanStatus) }}</span>
+        </div>
+        <p class="val-card__exp">{{ a.explanation }}</p>
+        @if (a.humanNote) {
+          <p class="val-card__note">Note: {{ a.humanNote }}</p>
+        }
+        @if (a.humanStatus === 'pending') {
+          <label class="val-card__field">
+            <span class="val-card__lbl">Justification (reject)</span>
+            <textarea
+              rows="2"
+              class="val-card__ta"
+              [(ngModel)]="notes[a.id]"
+              [name]="'note-' + a.id"
+              placeholder="e.g. supporting document archived under…"
+            ></textarea>
+          </label>
+          <div class="val-card__actions">
+            <button type="button" class="btn btn--ok" (click)="confirm(d.id, a.id)">Confirm anomaly</button>
+            <button type="button" class="btn btn--no" (click)="reject(d.id, a.id)">Reject</button>
+          </div>
+        }
+      </li>
+    }
+  </ul>
+}

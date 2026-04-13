@@ -1,0 +1,22 @@
+@if (dossier(); as d) {
+  <h2 class="page-title">Tenders</h2>
+  @if (d.tender.bids.length) {
+    <p class="page-lead">{{ d.tender.title }}</p>
+    <ul class="bid-list">
+      @for (b of d.tender.bids; track b.supplierName) {
+        <li class="bid">
+          <span class="bid__rank">#{{ b.rank }}</span>
+          <span class="bid__name">{{ b.supplierName }}</span>
+          <span class="bid__amt">{{ b.amount | currency: 'EUR' : 'symbol' : '1.0-0' }}</span>
+        </li>
+      }
+    </ul>
+    <div class="insight">
+      <p><strong>Winner:</strong> {{ d.tender.winner }}</p>
+      <p><strong>Runner-up:</strong> {{ d.tender.secondPlace }} — gap {{ d.tender.gapPercent }}%</p>
+      <p class="insight__note"><strong>Coherence:</strong> {{ d.tender.coherenceNote }}</p>
+    </div>
+  } @else {
+    <p class="page-lead">No structured tender data for this case.</p>
+  }
+}

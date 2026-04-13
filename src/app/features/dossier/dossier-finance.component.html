@@ -1,0 +1,30 @@
+@if (dossier(); as d) {
+  <h2 class="page-title">Bank reconciliation</h2>
+  <p class="page-lead">Invoice vs payment — matching status.</p>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Invoice</th>
+          <th>Payment</th>
+          <th class="num">Invoice amount</th>
+          <th class="num">Payment amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of d.reconciliation; track row.invoiceRef + row.paymentRef) {
+          <tr [class]="'row--' + row.status">
+            <td>{{ row.invoiceRef }}</td>
+            <td>{{ row.paymentRef }}</td>
+            <td class="num">{{ row.amountInvoice | currency: 'EUR' : 'symbol' : '1.0-0' }}</td>
+            <td class="num">{{ row.amountPayment | currency: 'EUR' : 'symbol' : '1.0-0' }}</td>
+            <td>
+              <span class="pill" [class]="'pill--' + row.status">{{ statusLabel(row.status) }}</span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

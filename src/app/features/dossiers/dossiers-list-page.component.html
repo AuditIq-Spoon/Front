@@ -1,0 +1,41 @@
+<div class="list">
+  <h1 class="list__title">Cases</h1>
+  <p class="list__lead">Analysis status, risk score, and detail view.</p>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Case</th>
+          <th>Status</th>
+          <th class="num">Score</th>
+          <th>Risk</th>
+          <th>Updated</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (d of store.all(); track d.id) {
+          <tr>
+            <td>
+              <span class="mono">{{ d.id }}</span>
+              <br />
+              <span class="lbl">{{ d.label }}</span>
+            </td>
+            <td>
+              <span class="pill" [class.pill--done]="d.status === 'analyzed'">
+                {{ d.status === 'analyzed' ? 'Analyzed' : 'In progress' }}
+              </span>
+            </td>
+            <td class="num">{{ d.riskScore }}</td>
+            <td>{{ riskLabel(d.riskBand) }}</td>
+            <td>{{ d.updatedAt | date: 'short' }}</td>
+            <td>
+              <a [routerLink]="['/cases', d.id]" class="cta">View detail</a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

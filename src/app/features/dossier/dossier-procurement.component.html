@@ -1,0 +1,31 @@
+@if (dossier(); as d) {
+  <h2 class="page-title">Procurement analysis</h2>
+  <p class="page-lead">Invoice / quote / market comparison — price distribution and visible outliers.</p>
+
+  <div class="kpi-grid">
+    <article class="kpi">
+      <h3 class="kpi__l">Mean</h3>
+      <p class="kpi__v">{{ d.kpi.mean | number: '1.0-0' }} €</p>
+    </article>
+    <article class="kpi">
+      <h3 class="kpi__l">Median</h3>
+      <p class="kpi__v">{{ d.kpi.median | number: '1.0-0' }} €</p>
+    </article>
+    <article class="kpi">
+      <h3 class="kpi__l">Std dev</h3>
+      <p class="kpi__v">{{ d.kpi.stdev | number: '1.0-0' }} €</p>
+    </article>
+  </div>
+
+  <h3 class="sub-h">Price distribution (histogram)</h3>
+  <div class="chart-bar" role="img" aria-label="Price histogram">
+    @for (h of d.priceHistogram; track $index) {
+      <div
+        class="chart-bar__segment"
+        [class.chart-bar__segment--outlier]="$index >= d.priceHistogram.length - 2"
+        [style.height.%]="(100 * h) / maxHist()"
+        [title]="'Bin ' + ($index + 1) + ': ' + h"
+      ></div>
+    }
+  </div>
+}

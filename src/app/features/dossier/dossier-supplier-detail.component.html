@@ -1,0 +1,17 @@
+@if (supplier(); as s) {
+  <a [routerLink]="['/cases', dossierId(), 'suppliers']" class="back">← Suppliers</a>
+  <h2 class="page-title">{{ s.name }}</h2>
+  <dl class="dl">
+    <dt>Win rate</dt>
+    <dd>{{ s.winRate | percent: '1.0-0' }}</dd>
+    <dt>Frequency</dt>
+    <dd>{{ s.frequency }} appearances</dd>
+    <dt>Avg price delta</dt>
+    <dd>{{ s.avgPriceDelta > 0 ? '+' : '' }}{{ s.avgPriceDelta | number: '1.1-1' }}%</dd>
+    <dt>Risk</dt>
+    <dd>{{ s.riskNote }}</dd>
+  </dl>
+} @else {
+  <p>Supplier not found.</p>
+  <a [routerLink]="['/cases', dossierId(), 'suppliers']" class="back">Back</a>
+}

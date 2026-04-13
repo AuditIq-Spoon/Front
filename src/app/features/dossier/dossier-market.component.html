@@ -1,0 +1,32 @@
+@if (dossier(); as d) {
+  <h2 class="page-title">Market comparison</h2>
+  <p class="page-lead">Market price (API / aggregates) vs invoice — gaps and trends.</p>
+  @if (d.market.length) {
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Item / reference</th>
+            <th class="num">Market price</th>
+            <th class="num">Invoice price</th>
+            <th class="num">Gap</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (m of d.market; track m.label) {
+            <tr>
+              <td>{{ m.label }}</td>
+              <td class="num">{{ m.marketPrice | currency: 'EUR' : 'symbol' : '1.0-0' }}</td>
+              <td class="num">{{ m.invoicePrice | currency: 'EUR' : 'symbol' : '1.0-0' }}</td>
+              <td class="num gap" [class.gap--high]="m.gapPercent > 25">
+                {{ m.gapPercent | number: '1.1-1' }}%
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <p class="muted">No market data attached to this case.</p>
+  }
+}

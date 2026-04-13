@@ -1,0 +1,55 @@
+@if (dossier(); as d) {
+  <section class="sum" aria-labelledby="sum-h">
+    <h2 id="sum-h" class="sr-only">Summary</h2>
+    <div class="sum__grid">
+      <article class="sum__card sum__card--score">
+        <h3 class="sum__label">Risk score</h3>
+        <p class="sum__value">{{ d.riskScore }}<span class="sum__unit">/100</span></p>
+        <p class="sum__band" [class]="'sum__band--' + d.riskBand">{{ riskLabel(d.riskBand) }}</p>
+      </article>
+      <article class="sum__card">
+        <h3 class="sum__label">Anomalies</h3>
+        <p class="sum__value">{{ d.anomalyCount }}</p>
+        <a [routerLink]="['/cases', d.id, 'validation']" class="sum__link">Human validation →</a>
+      </article>
+      <article class="sum__card">
+        <h3 class="sum__label">Last updated</h3>
+        <p class="sum__sub">{{ d.updatedAt | date: 'medium' }}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="brk" aria-labelledby="brk-h">
+    <h2 id="brk-h" class="brk__title">Score breakdown (contributions)</h2>
+    <ul class="brk__list">
+      @for (row of scoreBreakdown(); track row.label) {
+        <li class="brk__item">
+          <span>{{ row.label }}</span>
+          <span class="brk__pts">+{{ row.points }}</span>
+        </li>
+      }
+      @if (!scoreBreakdown().length) {
+        <li class="brk__empty">No pending anomalies for scoring.</li>
+      }
+    </ul>
+  </section>
+
+  <section class="ano" aria-labelledby="ano-h">
+    <h2 id="ano-h" class="ano__title">Detected anomalies</h2>
+    <ul class="ano__list">
+      @for (a of d.anomalies; track a.id) {
+        <li class="ano__card" [class]="'ano__card--' + a.severity">
+          <div class="ano__head">
+            <span class="ano__type">{{ a.typeLabel }}</span>
+            <span class="ano__sev">{{ a.severity }}</span>
+            <span class="ano__impact">Impact +{{ a.impactScore }}</span>
+          </div>
+          <p class="ano__exp">{{ a.explanation }}</p>
+          @if (a.humanNote) {
+            <p class="ano__note">Human note: {{ a.humanNote }}</p>
+          }
+        </li>
+      }
+    </ul>
+  </section>
+}

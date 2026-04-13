@@ -1,0 +1,51 @@
+.page-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.page-lead {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--color-secondary);
+}
+
+.sup-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sup-card {
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.sup-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: inherit;
+  font-weight: 600;
+}
+
+.sup-card__link:hover .sup-card__name {
+  color: var(--color-accent);
+}
+
+.sup-card__meta {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--color-secondary);
+}
+
+.sup-card__risk {
+  margin: 0.5rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--color-secondary);
+}

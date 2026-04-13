@@ -1,0 +1,49 @@
+.page-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.page-lead {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--color-secondary);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.data-table th {
+  font-weight: 600;
+  color: var(--color-secondary);
+  background: var(--color-muted);
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.gap--high {
+  color: var(--color-destructive);
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--color-secondary);
+  font-size: 0.875rem;
+}

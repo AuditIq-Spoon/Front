@@ -1,0 +1,119 @@
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.875rem 1.5rem;
+  background: var(--color-on-primary);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.shell__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+
+.shell__brand:hover {
+  opacity: 0.88;
+}
+
+.shell__title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.shell__name {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--color-primary);
+}
+
+.shell__tagline {
+  font-size: 0.75rem;
+  color: var(--color-secondary);
+  font-weight: 400;
+}
+
+.shell__nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.shell__link {
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-secondary);
+  transition:
+    background var(--transition),
+    color var(--transition);
+}
+
+.shell__link:hover {
+  background: var(--color-muted);
+  color: var(--color-foreground);
+}
+
+.shell__link.is-active {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.shell__body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 768px) {
+  .shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .shell__aside {
+    display: none;
+  }
+}
+
+.shell__aside {
+  padding: 1.25rem 1rem;
+  background: var(--color-on-primary);
+  border-right: 1px solid var(--color-border);
+}
+
+.shell__aside-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-secondary);
+}
+
+.shell__steps {
+  margin: 0;
+  padding-left: 1.125rem;
+  font-size: 0.8125rem;
+  color: var(--color-secondary);
+  line-height: 1.65;
+}
+
+.shell__main {
+  padding: 1.5rem;
+  overflow: auto;
+}

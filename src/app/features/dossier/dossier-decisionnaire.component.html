@@ -1,0 +1,16 @@
+@if (dossier(); as d) {
+  <h2 class="page-title">Decision intelligence</h2>
+  <p class="page-lead">Decision history, potential bias, and inconsistencies.</p>
+  @if (d.decisionPatterns.length) {
+    <ul class="pat-list">
+      @for (p of d.decisionPatterns; track p.label) {
+        <li class="pat" [class]="riskClass(p.riskIndicator)">
+          <h3 class="pat__title">{{ p.label }}</h3>
+          <p class="pat__detail">{{ p.detail }}</p>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p class="muted">No decision patterns indexed for this case.</p>
+  }
+}

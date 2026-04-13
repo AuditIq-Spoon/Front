@@ -1,0 +1,71 @@
+<div class="dash">
+  <header class="dash__head">
+    <h1 class="dash__title">Dashboard</h1>
+    <p class="dash__lead">
+      RiskLens-style overview: scores, anomalies, risk mix, and recent activity.
+    </p>
+  </header>
+
+  <section class="dash__kpis" aria-label="Key metrics">
+    <article class="kpi kpi--accent">
+      <h2 class="kpi__label">Average score</h2>
+      <p class="kpi__value">{{ summary().avgRisk }}<span class="kpi__unit">/100</span></p>
+    </article>
+    <article class="kpi">
+      <h2 class="kpi__label">Total anomalies</h2>
+      <p class="kpi__value">{{ summary().totalAnomalies }}</p>
+    </article>
+    <article class="kpi kpi--risk-high">
+      <h2 class="kpi__label">High-risk cases</h2>
+      <p class="kpi__value">{{ summary().high }}</p>
+    </article>
+    <article class="kpi kpi--risk-med">
+      <h2 class="kpi__label">Medium risk</h2>
+      <p class="kpi__value">{{ summary().medium }}</p>
+    </article>
+    <article class="kpi kpi--risk-low">
+      <h2 class="kpi__label">Low risk</h2>
+      <p class="kpi__value">{{ summary().low }}</p>
+    </article>
+  </section>
+
+  <div class="dash__grid">
+    <section class="panel" aria-labelledby="dist-h">
+      <h2 id="dist-h" class="panel__title">Price distribution (aggregated)</h2>
+      <div class="chart-bar" role="img" aria-label="Histogram">
+        @for (h of histDemo(); track $index) {
+          <div
+            class="chart-bar__segment"
+            [class.chart-bar__segment--outlier]="$index >= histDemo().length - 2"
+            [style.height.%]="(100 * h) / maxHist()"
+          ></div>
+        }
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="sup-h">
+      <h2 id="sup-h" class="panel__title">Top suppliers by volume</h2>
+      <ul class="rank">
+        @for (s of topSuppliers(); track s[0]) {
+          <li class="rank__row">
+            <span>{{ s[0] }}</span>
+            <span class="rank__n">{{ s[1] }}</span>
+          </li>
+        }
+      </ul>
+    </section>
+  </div>
+
+  <section class="panel panel--full" aria-labelledby="act-h">
+    <h2 id="act-h" class="panel__title">Recent activity</h2>
+    <ul class="activity">
+      @for (d of dossiers(); track d.id) {
+        <li class="activity__row">
+          <a [routerLink]="['/cases', d.id]" class="activity__link">{{ d.label }}</a>
+          <span class="activity__badge" [class]="'activity__badge--' + d.riskBand">{{ d.riskScore }} pts</span>
+          <time class="activity__time">{{ d.updatedAt | date: 'short' }}</time>
+        </li>
+      }
+    </ul>
+  </section>
+</div>
