@@ -1,0 +1,122 @@
+/* AuditIQ Global Styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base resets ─────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus ring — visible for keyboard navigation */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+  }
+
+  /* Scrollbar — subtle dark theme */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-background; }
+  ::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-secondary; }
+}
+
+/* ── Component layer ─────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Card */
+  .card {
+    @apply bg-secondary border border-border rounded-lg shadow-card;
+  }
+  .card-hover {
+    @apply card transition-shadow duration-200 hover:shadow-card-hover cursor-pointer;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5
+           text-sm font-medium transition-all duration-150 cursor-pointer
+           focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-background hover:bg-accent-hover
+           active:scale-[0.97] shadow-glow-accent;
+  }
+  .btn-secondary {
+    @apply btn bg-secondary text-foreground border border-border
+           hover:bg-primary active:scale-[0.97];
+  }
+  .btn-danger {
+    @apply btn bg-destructive text-white hover:bg-red-600 active:scale-[0.97];
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-foreground/70 hover:bg-muted hover:text-foreground;
+  }
+
+  /* Input */
+  .input {
+    @apply w-full bg-primary border border-border rounded-md px-3 py-2.5
+           text-sm text-foreground placeholder-foreground/40
+           transition-colors duration-150
+           focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  /* Label */
+  .label {
+    @apply block text-sm font-medium text-foreground/80 mb-1.5;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5
+           text-xs font-medium;
+  }
+  .badge-safe     { @apply badge bg-risk-safe/15 text-risk-safe; }
+  .badge-low      { @apply badge bg-risk-low/15 text-risk-low; }
+  .badge-medium   { @apply badge bg-risk-medium/15 text-risk-medium; }
+  .badge-high     { @apply badge bg-risk-high/15 text-risk-high; }
+  .badge-critical { @apply badge bg-risk-critical/15 text-risk-critical; }
+  .badge-pending  { @apply badge bg-muted text-foreground/50; }
+  .badge-running  { @apply badge bg-accent/15 text-accent animate-pulse-slow; }
+
+  /* Divider */
+  .divider { @apply border-t border-border; }
+
+  /* Terminal / log */
+  .terminal {
+    @apply bg-background border border-border rounded-lg p-4 font-mono text-sm
+           text-foreground/90 overflow-y-auto;
+  }
+}
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+
+  /* Tabular numbers for financial data */
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* Reduced-motion safe animation disable */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
