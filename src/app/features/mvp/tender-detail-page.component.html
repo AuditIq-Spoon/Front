@@ -1,0 +1,35 @@
+<div class="mvp">
+  <a routerLink="/documents" class="mvp__back">← Back to documents</a>
+
+  <ng-container *ngIf="tender() as t; else notFound">
+    <div class="mvp__hero">
+      <p class="mvp__eyebrow">Tender</p>
+      <h1 class="mvp__h1">{{ t.reference }}</h1>
+      <p class="mvp__lead">{{ t.title }}</p>
+    </div>
+    <dl class="mvp__dl">
+      <dt>Opened</dt>
+      <dd>{{ t.openedAt | date : 'mediumDate' }}</dd>
+      <dt>Closed</dt>
+      <dd>{{ t.closedAt | date : 'mediumDate' }}</dd>
+      <dt *ngIf="t.budgetHint">Indicative budget</dt>
+      <dd *ngIf="t.budgetHint">{{ t.budgetHint | currency : t.currency : 'symbol' : '1.0-0' }}</dd>
+    </dl>
+
+    <h2 class="mvp__h2">Linked quotes</h2>
+    <ul *ngIf="offers().length; else noOffers" class="mvp__cards">
+      <li *ngFor="let o of offers()" class="mvp__card-row">
+        <a [routerLink]="['/documents', 'offers', o.id]" class="mvp__card-link">{{ o.reference }}</a>
+        <span class="mvp__muted">{{ o.supplierName }} · {{ o.amount | currency : o.currency : 'symbol' : '1.0-0' }}</span>
+      </li>
+    </ul>
+    <ng-template #noOffers>
+      <p class="mvp__muted">No sample quotes for this tender.</p>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #notFound>
+    <p class="mvp__err">Tender not found.</p>
+    <a routerLink="/documents" class="mvp__back">Back to list</a>
+  </ng-template>
+</div>

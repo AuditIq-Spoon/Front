@@ -1,0 +1,128 @@
+<div class="analysis">
+  <div class="analysis__toolbar no-print">
+    <a routerLink="/audit" class="analysis__link">← Audit period</a>
+    <a routerLink="/documents" class="analysis__link">Documents</a>
+    <button type="button" class="analysis__print" (click)="exportPdf()">Export PDF (print)</button>
+  </div>
+
+  <div *ngIf="!audit.period()" class="analysis__warn no-print" role="status">
+    <p>
+      <strong>No audit period is set.</strong>
+      <a routerLink="/audit">Start an audit</a> to anchor this report to a date range.
+    </p>
+  </div>
+
+  <article id="report-print" class="report" aria-label="Analysis report">
+    <header class="report__head">
+      <p class="report__brand">AuditIQ</p>
+      <h1 class="report__title">Analysis results — financial &amp; procurement risk</h1>
+      <p *ngIf="audit.period() as p" class="report__meta">
+        Audited period:
+        <strong>{{ p.startDate | date : 'mediumDate' }}</strong>
+        —
+        <strong>{{ p.endDate | date : 'mediumDate' }}</strong>
+        · Reference {{ p.id }}
+      </p>
+      <p *ngIf="!audit.period()" class="report__meta">Period: not set (demo view).</p>
+    </header>
+
+    <section class="report__section report__section--surface" aria-labelledby="exec-h">
+      <h2 id="exec-h" class="report__h2">1. Executive summary — what to show</h2>
+      <ul class="report__ul">
+        <li><strong>Overall risk score</strong> (documented scale, e.g. 0–100) with High / Medium / Low band.</li>
+        <li><strong>Anomaly counts</strong> — open vs human-validated.</li>
+        <li><strong>Top risk items</strong> — amount, supplier, anomaly type.</li>
+        <li><strong>Supplier exposure</strong> — concentration of payments and tender wins.</li>
+        <li><strong>Market gap</strong> — median or external benchmark vs invoiced prices.</li>
+      </ul>
+    </section>
+
+    <section class="report__section" aria-labelledby="data-h">
+      <h2 id="data-h" class="report__h2">2. Data fields that drive fraud, over-invoicing, and favoritism detection</h2>
+      <p class="report__p">
+        From a <strong>financial analyst</strong> perspective, the fields below — once normalized and linked (invoice ↔
+        payment ↔ tender ↔ quote ↔ counterparty) — power business rules, scoring, and ML models.
+      </p>
+
+      <h3 class="report__h3">Invoices &amp; lines</h3>
+      <ul class="report__ul">
+        <li>Net / gross amounts, currency, VAT rate, issue date, posting date.</li>
+        <li>Supplier identifiers (company reg., tax ID), line descriptions, quantity, unit price, discounts.</li>
+        <li>PO / contract / framework reference tied to the commercial instrument.</li>
+        <li>Billing address vs supplier history (shell-entity risk).</li>
+      </ul>
+
+      <h3 class="report__h3">Payments &amp; bank statements</h3>
+      <ul class="report__ul">
+        <li>Transfer reference, amount, value date, structured narrative (expected invoice ref).</li>
+        <li>Counterparty IBAN / BIC, split payments, many-to-one invoice matching.</li>
+        <li>Gaps: “payment without invoice” or “invoice without payment” inside the audit window.</li>
+      </ul>
+
+      <h3 class="report__h3">Public procurement: tenders &amp; quotes</h3>
+      <ul class="report__ul">
+        <li>Tender ID, opening / closing dates, lots, weighted criteria (price / technical).</li>
+        <li>Per quote: supplier, amount, submission time, price-clustering anomalies.</li>
+        <li>Win history by supplier; enrichment signals (ownership, geography) when available.</li>
+      </ul>
+
+      <h3 class="report__h3">Market prices &amp; indices</h3>
+      <ul class="report__ul">
+        <li>Item codes / taxonomy, price source (catalog, index), reference band.</li>
+        <li>Invoice vs market median % gap — primary over-invoicing signal.</li>
+      </ul>
+    </section>
+
+    <section class="report__section report__section--surface" aria-labelledby="signals-h">
+      <h2 id="signals-h" class="report__h2">3. Signals to highlight in the PDF export</h2>
+      <ul class="report__ul">
+        <li><strong>Over-invoicing</strong> — price vs market gap; unit-price distribution outliers.</li>
+        <li><strong>Favoritism</strong> — abnormal win rate, low rotation of incumbents, “cosmetic” competition.</li>
+        <li><strong>Collusion</strong> — low bid spread; synchronized bid levels.</li>
+        <li><strong>Tender manipulation</strong> — specifications mirroring a single vendor catalogue.</li>
+        <li><strong>Financial anomalies</strong> — duplicate payments, systematic rounding, amounts just below approval thresholds.</li>
+      </ul>
+    </section>
+
+    <section class="report__section" aria-labelledby="table-h">
+      <h2 id="table-h" class="report__h2">4. Priority controls (demo data)</h2>
+      <div class="report__table-wrap">
+        <table class="report__table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Theme</th>
+              <th>Severity</th>
+              <th>Description</th>
+              <th>Evidence / fields</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of findings">
+              <td class="report__mono">{{ row.code }}</td>
+              <td>{{ row.theme }}</td>
+              <td>
+                <span class="report__sev" [attr.data-sev]="row.severity">{{ severityLabel(row.severity) }}</span>
+              </td>
+              <td>{{ row.description }}</td>
+              <td>{{ row.dataPoints }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="report__section report__section--surface" aria-labelledby="reco-h">
+      <h2 id="reco-h" class="report__h2">5. Recommendations (official-style export)</h2>
+      <ol class="report__ol">
+        <li>Manually validate every “high” alert with archived supporting documents.</li>
+        <li>Reconcile bank statements and invoices for the audited period before signing off.</li>
+        <li>Document every rejected anomaly (audit trail / market discipline).</li>
+      </ol>
+    </section>
+
+    <footer class="report__foot">
+      <p>AuditIQ — MVP demonstration report. Connect analytics engines to ingested datasets for live scores.</p>
+    </footer>
+  </article>
+</div>

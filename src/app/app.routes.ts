@@ -6,86 +6,31 @@ export const routes: Routes = [
     path: '',
     component: AppShellComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      { path: '', pathMatch: 'full', redirectTo: 'audit' },
       {
-        path: 'dashboard',
+        path: 'audit',
         loadComponent: () =>
-          import('./features/dashboard/dashboard-page.component').then((m) => m.DashboardPageComponent),
+          import('./features/mvp/audit-launch-page.component').then((m) => m.AuditLaunchPageComponent),
       },
       {
-        path: 'cases',
+        path: 'documents',
         loadComponent: () =>
-          import('./features/dossiers/dossiers-list-page.component').then((m) => m.DossiersListPageComponent),
+          import('./features/mvp/documents-hub.component').then((m) => m.DocumentsHubComponent),
       },
       {
-        path: 'upload',
+        path: 'documents/tenders/:tenderId',
         loadComponent: () =>
-          import('./features/upload/upload-hub.component').then((m) => m.UploadHubComponent),
+          import('./features/mvp/tender-detail-page.component').then((m) => m.TenderDetailPageComponent),
       },
       {
-        path: 'cases/:id',
+        path: 'documents/offers/:offerId',
         loadComponent: () =>
-          import('./features/dossier/dossier-shell.component').then((m) => m.DossierShellComponent),
-        children: [
-          {
-            path: '',
-            loadComponent: () =>
-              import('./features/dossier/dossier-overview.component').then((m) => m.DossierOverviewComponent),
-          },
-          {
-            path: 'finance',
-            loadComponent: () =>
-              import('./features/dossier/dossier-finance.component').then((m) => m.DossierFinanceComponent),
-          },
-          {
-            path: 'procurement',
-            loadComponent: () =>
-              import('./features/dossier/dossier-procurement.component').then(
-                (m) => m.DossierProcurementComponent,
-              ),
-          },
-          {
-            path: 'tenders',
-            loadComponent: () =>
-              import('./features/dossier/dossier-tenders.component').then((m) => m.DossierTendersComponent),
-          },
-          {
-            path: 'decisions',
-            loadComponent: () =>
-              import('./features/dossier/dossier-decisionnaire.component').then(
-                (m) => m.DossierDecisionnaireComponent,
-              ),
-          },
-          {
-            path: 'validation',
-            loadComponent: () =>
-              import('./features/dossier/dossier-validation.component').then(
-                (m) => m.DossierValidationComponent,
-              ),
-          },
-          {
-            path: 'suppliers',
-            loadComponent: () =>
-              import('./features/dossier/dossier-suppliers.component').then((m) => m.DossierSuppliersComponent),
-          },
-          {
-            path: 'suppliers/:supplierId',
-            loadComponent: () =>
-              import('./features/dossier/dossier-supplier-detail.component').then(
-                (m) => m.DossierSupplierDetailComponent,
-              ),
-          },
-          {
-            path: 'market',
-            loadComponent: () =>
-              import('./features/dossier/dossier-market.component').then((m) => m.DossierMarketComponent),
-          },
-          {
-            path: 'report',
-            loadComponent: () =>
-              import('./features/dossier/dossier-report.component').then((m) => m.DossierReportComponent),
-          },
-        ],
+          import('./features/mvp/offer-detail-page.component').then((m) => m.OfferDetailPageComponent),
+      },
+      {
+        path: 'analysis',
+        loadComponent: () =>
+          import('./features/mvp/analysis-results-page.component').then((m) => m.AnalysisResultsPageComponent),
       },
     ],
   },

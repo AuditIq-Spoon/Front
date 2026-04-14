@@ -1,7 +1,39 @@
+.shell__skip {
+  position: absolute;
+  left: -9999px;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+}
+
+.shell__skip:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
 .shell {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+}
+
+@media print {
+  .shell__header,
+  .shell__aside,
+  .shell__skip {
+    display: none !important;
+  }
+
+  .shell__body {
+    display: block;
+  }
+
+  .shell__main {
+    padding: 0;
+    overflow: visible;
+  }
 }
 
 .shell__header {
@@ -10,10 +42,14 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  padding: 0.875rem 1.5rem;
-  background: var(--color-on-primary);
+  padding: 0.9rem 1.5rem;
+  background: rgb(255 255 255 / 0.92);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 0 rgb(12 35 64 / 0.04), var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 .shell__brand {
@@ -49,28 +85,38 @@
 
 .shell__nav {
   display: flex;
-  gap: 0.25rem;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.2rem;
+  border-radius: var(--radius-md);
+  background: var(--color-muted);
 }
 
 .shell__link {
-  padding: 0.5rem 0.875rem;
+  padding: 0.5rem 1rem;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
   border-radius: var(--radius-sm);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-secondary);
   transition:
     background var(--transition),
-    color var(--transition);
+    color var(--transition),
+    box-shadow var(--transition);
 }
 
 .shell__link:hover {
-  background: var(--color-muted);
+  background: var(--color-surface);
   color: var(--color-foreground);
+  box-shadow: var(--shadow-sm);
 }
 
 .shell__link.is-active {
   background: var(--color-primary);
   color: var(--color-on-primary);
+  box-shadow: 0 2px 8px rgb(12 35 64 / 0.2);
 }
 
 .shell__body {
@@ -92,8 +138,9 @@
 
 .shell__aside {
   padding: 1.25rem 1rem;
-  background: var(--color-on-primary);
+  background: var(--color-surface);
   border-right: 1px solid var(--color-border);
+  box-shadow: inset -1px 0 0 rgb(12 35 64 / 0.03);
 }
 
 .shell__aside-title {
@@ -114,6 +161,8 @@
 }
 
 .shell__main {
-  padding: 1.5rem;
+  padding: 1.75rem clamp(1rem, 3vw, 2.25rem);
   overflow: auto;
+  background: linear-gradient(180deg, rgb(240 243 247 / 0.5) 0%, var(--color-background) 18rem);
+  min-height: 100%;
 }

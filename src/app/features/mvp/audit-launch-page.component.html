@@ -1,0 +1,56 @@
+<div class="audit">
+  <section class="audit__panel" aria-labelledby="audit-title">
+    <header class="audit__head">
+      <span class="audit__brand">AuditIQ</span>
+      <h1 id="audit-title" class="audit__title">Start an audit</h1>
+      <p class="audit__subtitle">Pick a start and end date. Reports and uploads use this range.</p>
+    </header>
+
+    <form class="audit__form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="audit__fields">
+        <div class="audit__field">
+          <label class="audit__label" for="audit-start">Start date</label>
+          <input
+            id="audit-start"
+            class="audit__input"
+            type="date"
+            name="startDate"
+            [(ngModel)]="startDate"
+            required
+            aria-required="true"
+          />
+        </div>
+        <div class="audit__field">
+          <label class="audit__label" for="audit-end">End date</label>
+          <input
+            id="audit-end"
+            class="audit__input"
+            type="date"
+            name="endDate"
+            [(ngModel)]="endDate"
+            required
+            aria-required="true"
+          />
+        </div>
+      </div>
+
+      <p *ngIf="errorMsg" class="audit__err" role="alert">{{ errorMsg }}</p>
+
+      <button type="submit" class="audit__submit">Run audit</button>
+
+      <p *ngIf="!submitted" class="audit__note">
+        Need files first?
+        <a routerLink="/documents">Go to Documents</a>
+        — you can save the period whenever you are ready.
+      </p>
+    </form>
+
+    <div *ngIf="submitted" class="audit__done" role="status">
+      <p class="audit__done-msg"><strong>Period saved.</strong> What would you like to do next?</p>
+      <div class="audit__done-actions">
+        <a routerLink="/documents" class="audit__btn audit__btn--primary">Import documents</a>
+        <a routerLink="/analysis" class="audit__btn audit__btn--ghost">View analysis</a>
+      </div>
+    </div>
+  </section>
+</div>

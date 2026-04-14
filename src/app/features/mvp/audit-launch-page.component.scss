@@ -1,0 +1,197 @@
+/* Single-column audit screen — one panel, vertical flow */
+.audit {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0 2rem;
+}
+
+.audit__panel {
+  width: 100%;
+  max-width: 22.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 1px 2px rgb(12 35 64 / 0.04),
+    0 12px 40px rgb(12 35 64 / 0.08);
+  overflow: hidden;
+}
+
+.audit__head {
+  padding: 1.5rem 1.5rem 1.25rem;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(180deg, rgb(248 250 252) 0%, var(--color-surface) 100%);
+}
+
+.audit__brand {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.audit__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.audit__subtitle {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-secondary);
+}
+
+.audit__form {
+  padding: 1.35rem 1.5rem 1.5rem;
+}
+
+.audit__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.audit__label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-secondary);
+}
+
+.audit__input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 48px;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  color: var(--color-foreground);
+  background: var(--color-surface);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.audit__input:hover {
+  border-color: var(--color-secondary-muted);
+}
+
+.audit__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgb(12 35 64 / 0.1);
+}
+
+.audit__err {
+  margin: 0.85rem 0 0;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.8125rem;
+  color: var(--color-destructive);
+  background: rgb(180 35 24 / 0.06);
+  border-radius: var(--radius-sm);
+}
+
+.audit__submit {
+  width: 100%;
+  margin-top: 1.25rem;
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgb(12 35 64 / 0.2);
+  transition:
+    background var(--transition),
+    transform 0.12s ease-out;
+}
+
+.audit__submit:hover {
+  background: var(--color-primary-muted);
+}
+
+.audit__submit:active {
+  transform: scale(0.99);
+}
+
+.audit__note {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-secondary);
+}
+
+.audit__done {
+  padding: 1.25rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--color-border);
+  background: rgb(15 110 78 / 0.04);
+}
+
+.audit__done-msg {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-foreground);
+}
+
+.audit__done-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.audit__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  text-align: center;
+  transition:
+    opacity var(--transition),
+    background var(--transition);
+}
+
+.audit__btn--primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary) !important;
+}
+
+.audit__btn--primary:hover {
+  opacity: 0.92;
+}
+
+.audit__btn--ghost {
+  background: transparent;
+  color: var(--color-primary) !important;
+  border: 1px solid var(--color-border);
+}
+
+.audit__btn--ghost:hover {
+  background: var(--color-muted);
+}

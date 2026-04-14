@@ -1,0 +1,29 @@
+<div class="mvp">
+  <a routerLink="/documents" class="mvp__back">← Back to documents</a>
+
+  <ng-container *ngIf="offer() as o; else notFound">
+    <div class="mvp__hero">
+      <p class="mvp__eyebrow">Quote / bid</p>
+      <h1 class="mvp__h1">{{ o.reference }}</h1>
+      <p class="mvp__lead">{{ o.supplierName }}</p>
+    </div>
+    <dl class="mvp__dl">
+      <dt>Amount</dt>
+      <dd>{{ o.amount | currency : o.currency : 'symbol' : '1.0-0' }}</dd>
+      <dt>Submitted</dt>
+      <dd>{{ o.submittedAt | date : 'mediumDate' }}</dd>
+      <dt>Parent tender</dt>
+      <dd>
+        <ng-container *ngIf="parentTender() as p; else orphan">
+          <a [routerLink]="['/documents', 'tenders', p.id]" class="mvp__card-link">{{ p.reference }} — {{ p.title }}</a>
+        </ng-container>
+        <ng-template #orphan>—</ng-template>
+      </dd>
+    </dl>
+  </ng-container>
+
+  <ng-template #notFound>
+    <p class="mvp__err">Quote not found.</p>
+    <a routerLink="/documents" class="mvp__back">Back</a>
+  </ng-template>
+</div>

@@ -1,6 +1,7 @@
+<a href="#main-content" class="shell__skip">Skip to content</a>
 <div class="shell">
   <header class="shell__header">
-    <a routerLink="/dashboard" class="shell__brand" aria-label="AuditIQ — Dashboard">
+    <a routerLink="/audit" class="shell__brand" aria-label="AuditIQ — Home">
       <span class="shell__logo" aria-hidden="true">
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
           <rect width="32" height="32" rx="8" fill="currentColor" />
@@ -13,41 +14,36 @@
       </span>
       <span class="shell__title">
         <span class="shell__name">AuditIQ</span>
-        <span class="shell__tagline">DataVigil — financial & procurement risk</span>
+        <span class="shell__tagline">Financial &amp; procurement risk — MVP</span>
       </span>
     </a>
     <nav class="shell__nav" aria-label="Main navigation">
-      <a routerLink="/dashboard" routerLinkActive="is-active" class="shell__link">Dashboard</a>
+      <a routerLink="/audit" routerLinkActive="is-active" class="shell__link">Audit</a>
       <a
-        routerLink="/cases"
+        routerLink="/documents"
         routerLinkActive="is-active"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{
+          paths: 'subset',
+          queryParams: 'ignored',
+          fragment: 'ignored',
+          matrixParams: 'ignored',
+        }"
         class="shell__link"
       >
-        Cases
+        Documents
       </a>
-      <a
-        routerLink="/upload"
-        routerLinkActive="is-active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="shell__link"
-      >
-        Upload
-      </a>
+      <a routerLink="/analysis" routerLinkActive="is-active" class="shell__link">Analysis</a>
     </nav>
   </header>
 
   <div class="shell__body">
-    <aside class="shell__aside" aria-label="User journey">
-      <h2 class="shell__aside-title">AuditIQ flow</h2>
+    <aside class="shell__aside" aria-label="Workflow">
+      <h2 class="shell__aside-title">Workflow</h2>
       <ol class="shell__steps">
-        <li>Upload case</li>
-        <li>Automated analysis</li>
-        <li>Dashboard & alerts</li>
-        <li>Case detail & anomalies</li>
-        <li>Deep dive (finance, procurement, tenders, decisions)</li>
-        <li>Human validation</li>
-        <li>Export report</li>
+        <li>Set the audit period</li>
+        <li>Upload invoices, bank files, quotes</li>
+        <li>Browse tenders &amp; quotes</li>
+        <li>Review the report &amp; export PDF</li>
       </ol>
     </aside>
     <main class="shell__main" id="main-content">
