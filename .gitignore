@@ -1,0 +1,9 @@
+# Dependencies & build
+/node_modules
+/dist
+/.angular
+
+# Local env (use .env.example as template)
+.env
+.env.local
+.env.*.local

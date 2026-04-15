@@ -6,8 +6,10 @@
  *   - environment.defaults.ts — imported by environment.ts so `ng serve` respects .env.
  *
  * Variables (first match wins):
- *   AUDITIQ_API_BASE_URL, NG_APP_API_BASE_URL
+ *   AUDITIQ_API_BASE_URL, NG_APP_API_BASE_URL  (dev / ng serve)
  *   AUDITIQ_WS_BASE_URL, NG_APP_WS_BASE_URL  (optional; derived from API URL when possible)
+ *   AUDITIQ_API_BASE_URL_PRODUCTION, NG_APP_API_BASE_URL_PRODUCTION  (override prod API URL)
+ *   AUDITIQ_WS_BASE_URL_PRODUCTION, NG_APP_WS_BASE_URL_PRODUCTION  (override prod WebSocket origin)
  */
 import fs from 'fs';
 import path from 'path';
@@ -21,6 +23,10 @@ const outDefaults = path.join(frontendRoot, 'src', 'environments', 'environment.
 
 const LOCAL_DEV_API = 'http://localhost:8000/api';
 const LOCAL_DEV_WS = 'ws://localhost:8000';
+
+/** Deployed FastAPI on Netlify — see Back site env / docs. */
+const DEFAULT_PROD_API = 'https://grand-sawine-e82b5d.netlify.app/api';
+const DEFAULT_PROD_WS = 'wss://grand-sawine-e82b5d.netlify.app';
 
 function loadDotEnv(file) {
   if (!fs.existsSync(file)) return;
@@ -66,10 +72,14 @@ loadDotEnv(envPath);
 
 const apiRaw = pick('AUDITIQ_API_BASE_URL', 'NG_APP_API_BASE_URL');
 
-/** Production bundle: default same-origin /api (e.g. Netlify proxy). */
-const apiProd = apiRaw || '/api';
-let wsProd = pick('AUDITIQ_WS_BASE_URL', 'NG_APP_WS_BASE_URL');
-if (!wsProd) wsProd = deriveWsFromApi(apiProd);
+/**
+ * Production bundle: dedicated prod URL (separate Netlify site for API).
+ * Override with AUDITIQ_API_BASE_URL_PRODUCTION / NG_APP_API_BASE_URL_PRODUCTION at build time if needed.
+ */
+const apiProd =
+  pick('AUDITIQ_API_BASE_URL_PRODUCTION', 'NG_APP_API_BASE_URL_PRODUCTION') || DEFAULT_PROD_API;
+let wsProd = pick('AUDITIQ_WS_BASE_URL_PRODUCTION', 'NG_APP_WS_BASE_URL_PRODUCTION');
+if (!wsProd) wsProd = deriveWsFromApi(apiProd) || DEFAULT_PROD_WS;
 
 /**
  * Dev server (`ng serve`): relative /api hits the Angular dev host, not FastAPI.
