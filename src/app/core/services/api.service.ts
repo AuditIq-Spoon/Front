@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of, throwError, timer } from 'rxjs';
+import { catchError, defaultIfEmpty, filter, switchMap, take } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import {
@@ -12,6 +12,7 @@ import {
   DocumentUpload,
   DocumentType,
   Tender,
+  UploadN8nStatusResponse,
 } from '../models/audit.models';
 
 export interface UploadPayload {
@@ -47,6 +48,25 @@ export class ApiService {
     return this.http
       .post<DocumentUpload[]>(`${this.base}/upload`, form)
       .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Poll until n8n calls /webhook/n8n-result-upload (or timeout ~2.5 min).
+   * Emits once: ready + result, or timeout.
+   */
+  pollUploadN8nResult(documentId: string): Observable<UploadN8nStatusResponse> {
+    const url = `${this.base}/upload/n8n-status/${encodeURIComponent(documentId)}`;
+    return timer(0, 2500).pipe(
+      switchMap(() =>
+        this.http.get<UploadN8nStatusResponse>(url).pipe(
+          catchError(() => of({ status: 'pending' as const, document_id: documentId })),
+        ),
+      ),
+      take(60),
+      filter((r) => r.status === 'ready'),
+      take(1),
+      defaultIfEmpty({ status: 'timeout' as const, document_id: documentId }),
+    );
   }
 
   /**

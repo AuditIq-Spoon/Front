@@ -15,6 +15,7 @@ import {
   DocumentUpload,
   DocumentType,
   Tender,
+  UploadN8nResultPayload,
   DOC_TYPE_LABELS,
   TENDER_DOCUMENT_TYPES,
 } from '../../core/models/audit.models';
@@ -26,6 +27,10 @@ interface UploadItem {
   tenderId: string;
   result?: DocumentUpload;
   error?: string;
+  n8n?: {
+    phase: 'polling' | 'ready' | 'timeout';
+    result?: UploadN8nResultPayload;
+  };
 }
 
 @Component({
@@ -194,6 +199,32 @@ interface UploadItem {
                 </ng-container>
               </span>
             </div>
+
+            <!-- n8n workflow yhs1QhteOspEbuDN — result card (polls backend after upload) -->
+            <div *ngIf="item.status === 'done' && item.n8n"
+                 class="pl-[52px] mt-3 rounded-xl border border-border bg-muted/30 p-4 space-y-3">
+              <p class="text-xs font-medium text-foreground/60">AI workflow (n8n)</p>
+              <div *ngIf="item.n8n.phase === 'polling'" class="flex items-center gap-2 text-sm text-foreground/50">
+                <span class="h-3 w-3 rounded-full border-2 border-accent border-t-transparent animate-spin inline-block"></span>
+                Waiting for callback to your API…
+              </div>
+              <ng-container *ngIf="item.n8n.phase === 'ready' && item.n8n.result">
+                <div class="flex flex-wrap items-baseline gap-2">
+                  <span class="text-2xl font-semibold text-foreground tabular-nums">{{ item.n8n.result.risk_score }}</span>
+                  <span class="text-sm text-foreground/45">/ 100 risk</span>
+                </div>
+                <p class="text-sm text-foreground/85 leading-relaxed">{{ item.n8n.result.risk_summary }}</p>
+                <ul *ngIf="item.n8n.result.anomalies?.length" class="text-xs space-y-1.5 text-foreground/70 list-disc pl-4">
+                  <li *ngFor="let a of item.n8n.result.anomalies">{{ anomalySummary(a) }}</li>
+                </ul>
+              </ng-container>
+              <p *ngIf="item.n8n.phase === 'timeout'" class="text-xs text-foreground/50 leading-relaxed">
+                No result received in time. Ensure n8n workflow ends with an HTTP Request to
+                <code class="text-[10px] bg-muted px-1 rounded">{{ callbackHint }}</code>
+                including header <code class="text-[10px] bg-muted px-1 rounded">X-N8n-Secret</code> and JSON body with
+                <code class="text-[10px] bg-muted px-1 rounded">document_id</code> (same as upload response <code class="text-[10px] bg-muted px-1 rounded">id</code>).
+              </p>
+            </div>
           </li>
         </ul>
 
@@ -231,6 +262,9 @@ interface UploadItem {
 })
 export class UploadComponent implements OnInit {
   @ViewChild('dropZone') dropZoneRef!: ElementRef<HTMLDivElement>;
+
+  /** Shown in timeout card — backend path; replace host with your deployed API. */
+  readonly callbackHint = '/api/webhook/n8n-result-upload';
 
   queue: UploadItem[] = [];
   tenders: Tender[] = [];
@@ -345,6 +379,21 @@ export class UploadComponent implements OnInit {
         results.forEach((res, idx) => {
           toUpload[idx].status = 'done';
           toUpload[idx].result = res;
+          toUpload[idx].n8n = { phase: 'polling' };
+          this.api.pollUploadN8nResult(String(res.id)).subscribe({
+            next: (st) => {
+              if (st.status === 'ready' && st.result) {
+                toUpload[idx].n8n = { phase: 'ready', result: st.result };
+              } else {
+                toUpload[idx].n8n = { phase: 'timeout' };
+              }
+              this.cd.markForCheck();
+            },
+            error: () => {
+              toUpload[idx].n8n = { phase: 'timeout' };
+              this.cd.markForCheck();
+            },
+          });
         });
         this.isUploading = false;
         this.uploadSuccess = true;
@@ -387,6 +436,13 @@ export class UploadComponent implements OnInit {
   tenderName(id: string): string {
     const t = this.tenders.find(x => x.id === id);
     return t ? `${t.reference} · ${t.name}` : id;
+  }
+
+  anomalySummary(a: Record<string, unknown>): string {
+    const code = typeof a['code'] === 'string' ? a['code'] : 'FLAG';
+    const desc =
+      typeof a['description'] === 'string' ? a['description'] : JSON.stringify(a);
+    return `${code}: ${desc}`;
   }
 
   formatSize(bytes: number): string {

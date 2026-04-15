@@ -62,6 +62,23 @@ export interface DocumentUpload {
   uploaded_at: string;
 }
 
+/** GET /upload/n8n-status/{documentId} — payload after n8n POSTs to /webhook/n8n-result-upload */
+export interface UploadN8nResultPayload {
+  status: string;
+  document_id: string;
+  session_id?: string;
+  risk_score: number;
+  risk_summary: string;
+  anomalies: Record<string, unknown>[];
+  processing_metadata?: Record<string, unknown>;
+}
+
+export interface UploadN8nStatusResponse {
+  status: 'pending' | 'ready' | 'timeout';
+  document_id?: string;
+  result?: UploadN8nResultPayload;
+}
+
 /** Row returned by GET /documents (no full OCR JSON). */
 export interface DocumentListItem {
   id: string;
