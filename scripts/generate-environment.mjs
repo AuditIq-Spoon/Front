@@ -28,8 +28,8 @@ const LOCAL_DEV_WS = 'ws://localhost:8000';
  * API prod : FastAPI exposée via Netlify Functions + Mangum (handler netlify/functions/auditiq).
  * URL du site API Netlify (ajuster si besoin via AUDITIQ_API_BASE_URL_PRODUCTION).
  */
-const DEFAULT_PROD_API = 'https://grand-sawine-e82b5d.netlify.app/api';
-const DEFAULT_PROD_WS = 'wss://grand-sawine-e82b5d.netlify.app';
+const DEFAULT_PROD_API = 'https://auditiq-back.vercel.app/api';
+const DEFAULT_PROD_WS = 'wss://auditiq-back.vercel.app';
 
 function loadDotEnv(file) {
   if (!fs.existsSync(file)) return;
