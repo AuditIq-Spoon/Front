@@ -85,8 +85,26 @@ export class WebSocketService implements OnDestroy {
 
   // ── Internal socket lifecycle ──────────────────────────────────────────────
 
+  /**
+   * Resolves WebSocket base URL. When `environment.wsBaseUrl` is empty (typical for
+   * same-origin Netlify builds with AUDITIQ_API_BASE_URL=/api), use the page origin.
+   */
+  private _wsBaseUrl(): string {
+    const configured = environment.wsBaseUrl?.trim();
+    if (configured) return configured.replace(/\/+$/, '');
+    if (typeof globalThis !== 'undefined' && 'location' in globalThis) {
+      const loc = (globalThis as unknown as { location: Location }).location;
+      if (loc?.host) {
+        const proto = loc.protocol === 'https:' ? 'wss:' : 'ws:';
+        return `${proto}//${loc.host}`;
+      }
+    }
+    return '';
+  }
+
   private _openSocket(sessionId: string, attempt = 0): void {
-    const url = `${environment.wsBaseUrl}/ws/progress/${sessionId}`;
+    const base = this._wsBaseUrl();
+    const url = `${base}/ws/progress/${sessionId}`;
     const ws = new WebSocket(url);
     this.sockets.set(sessionId, ws);
 

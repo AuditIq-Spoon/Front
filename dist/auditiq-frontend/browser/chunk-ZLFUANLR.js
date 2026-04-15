@@ -9,11 +9,17 @@ import {
   ɵɵinject
 } from "./chunk-W2VXPSOJ.js";
 
+// src/environments/environment.defaults.ts
+var devEnvironment = {
+  apiBaseUrl: "http://localhost:8000/api",
+  wsBaseUrl: "ws://localhost:8000"
+};
+
 // src/environments/environment.ts
 var environment = {
   production: false,
-  apiBaseUrl: "http://localhost:8000/api",
-  wsBaseUrl: "ws://localhost:8000"
+  apiBaseUrl: devEnvironment.apiBaseUrl,
+  wsBaseUrl: devEnvironment.wsBaseUrl
 };
 
 // src/app/core/services/api.service.ts
@@ -96,4 +102,4 @@ export {
   environment,
   ApiService
 };
-//# sourceMappingURL=chunk-Q3MZI6DE.js.map
+//# sourceMappingURL=chunk-ZLFUANLR.js.map

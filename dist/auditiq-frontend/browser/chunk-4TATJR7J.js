@@ -6,7 +6,7 @@ import {
 import {
   ApiService,
   environment
-} from "./chunk-Q3MZI6DE.js";
+} from "./chunk-ZLFUANLR.js";
 import {
   ActivatedRoute,
   ChangeDetectionStrategy,
@@ -99,8 +99,26 @@ var WebSocketService = class _WebSocketService {
     this._closeSocket(sessionId);
   }
   // ── Internal socket lifecycle ──────────────────────────────────────────────
+  /**
+   * Resolves WebSocket base URL. When `environment.wsBaseUrl` is empty (typical for
+   * same-origin Netlify builds with AUDITIQ_API_BASE_URL=/api), use the page origin.
+   */
+  _wsBaseUrl() {
+    const configured = environment.wsBaseUrl?.trim();
+    if (configured)
+      return configured.replace(/\/+$/, "");
+    if (typeof globalThis !== "undefined" && "location" in globalThis) {
+      const loc = globalThis.location;
+      if (loc?.host) {
+        const proto = loc.protocol === "https:" ? "wss:" : "ws:";
+        return `${proto}//${loc.host}`;
+      }
+    }
+    return "";
+  }
   _openSocket(sessionId, attempt = 0) {
-    const url = `${environment.wsBaseUrl}/ws/progress/${sessionId}`;
+    const base = this._wsBaseUrl();
+    const url = `${base}/ws/progress/${sessionId}`;
     const ws = new WebSocket(url);
     this.sockets.set(sessionId, ws);
     ws.onopen = () => {
@@ -1037,4 +1055,4 @@ var LiveAuditComponent = class _LiveAuditComponent {
 export {
   LiveAuditComponent
 };
-//# sourceMappingURL=chunk-L4OPPX7Q.js.map
+//# sourceMappingURL=chunk-4TATJR7J.js.map

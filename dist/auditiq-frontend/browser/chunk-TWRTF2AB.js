@@ -9,7 +9,7 @@ import {
 } from "./chunk-SNCFYU2E.js";
 import {
   ApiService
-} from "./chunk-Q3MZI6DE.js";
+} from "./chunk-ZLFUANLR.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -520,4 +520,4 @@ var DocumentsComponent = class _DocumentsComponent {
 export {
   DocumentsComponent
 };
-//# sourceMappingURL=chunk-WY4ZHPW2.js.map
+//# sourceMappingURL=chunk-TWRTF2AB.js.map

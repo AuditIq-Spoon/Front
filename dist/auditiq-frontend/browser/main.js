@@ -4444,27 +4444,27 @@ var routes = [
   { path: "", redirectTo: "dashboard", pathMatch: "full" },
   {
     path: "dashboard",
-    loadComponent: () => import("./chunk-VLJ362IW.js").then((m) => m.DashboardComponent),
+    loadComponent: () => import("./chunk-PQU3NVGC.js").then((m) => m.DashboardComponent),
     title: "Dashboard \u2014 AuditIQ"
   },
   {
     path: "upload",
-    loadComponent: () => import("./chunk-OGCA67GG.js").then((m) => m.UploadComponent),
+    loadComponent: () => import("./chunk-POOGBHLG.js").then((m) => m.UploadComponent),
     title: "Upload Documents \u2014 AuditIQ"
   },
   {
     path: "documents",
-    loadComponent: () => import("./chunk-WY4ZHPW2.js").then((m) => m.DocumentsComponent),
+    loadComponent: () => import("./chunk-TWRTF2AB.js").then((m) => m.DocumentsComponent),
     title: "Documents \u2014 AuditIQ"
   },
   {
     path: "new-session",
-    loadComponent: () => import("./chunk-6LIQIWJZ.js").then((m) => m.SessionCreatorComponent),
+    loadComponent: () => import("./chunk-TSJVZDO4.js").then((m) => m.SessionCreatorComponent),
     title: "New Audit Session \u2014 AuditIQ"
   },
   {
     path: "audit/:id",
-    loadComponent: () => import("./chunk-L4OPPX7Q.js").then((m) => m.LiveAuditComponent),
+    loadComponent: () => import("./chunk-4TATJR7J.js").then((m) => m.LiveAuditComponent),
     title: "Live Audit \u2014 AuditIQ"
   },
   { path: "**", redirectTo: "dashboard" }
