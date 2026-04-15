@@ -25,11 +25,11 @@ const LOCAL_DEV_API = 'http://localhost:8000/api';
 const LOCAL_DEV_WS = 'ws://localhost:8000';
 
 /**
- * API prod recommandée : conteneur Docker (Render, Railway, Fly…) — pas les serverless Netlify.
- * Définir AUDITIQ_API_BASE_URL_PRODUCTION sur l’URL réelle (ex. https://auditiq-api.onrender.com/api).
+ * API prod : FastAPI exposée via Netlify Functions + Mangum (handler netlify/functions/auditiq).
+ * URL du site API Netlify (ajuster si besoin via AUDITIQ_API_BASE_URL_PRODUCTION).
  */
-const DEFAULT_PROD_API = 'https://auditiq-api.onrender.com/api';
-const DEFAULT_PROD_WS = 'wss://auditiq-api.onrender.com';
+const DEFAULT_PROD_API = 'https://grand-sawine-e82b5d.netlify.app/api';
+const DEFAULT_PROD_WS = 'wss://grand-sawine-e82b5d.netlify.app';
 
 function loadDotEnv(file) {
   if (!fs.existsSync(file)) return;
